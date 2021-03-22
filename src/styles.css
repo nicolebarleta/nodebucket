@@ -1,4 +1,20 @@
+/*
+ ============================================
+; Title:  styles.css
+; Author: Professor Krasso
+; Date: 21 March 2021
+; Modified By: Marie Nicole Barleta
+; Description: Main styling for index file
+;===========================================
+**/
+
+
+
+
 /* You can add global styles to this file, and also import other style files */
 
+/* Start of the HTML and Body style*/
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* End of the HTML and Body style*/

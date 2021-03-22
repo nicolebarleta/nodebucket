@@ -1,4 +1,16 @@
 /**
+; Title:  base-response.js
+; Author: Professor Krasso
+; Date: 21 March 2021
+; Modified By: Marie Nicole Barleta
+; Description: The core of node.js API this is where all connections 
+; are declared to be able to be used in the whole API
+ */
+
+
+
+
+/**
  * Require statements
  */
 const express = require('express');
@@ -8,7 +20,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
 
-
+// This variable is to connect to the employee-route that connects to the schema of the database model
 const EmployeeAPI = require("./routes/employee-route");
 
 /**
@@ -44,7 +56,9 @@ mongoose.connect(conn, {
 }); // end mongoose connection
 
 /**
- * Route imports/resources
+ * Route imports/resources,
+ * Creates the api/employees route and
+ * gets the function from EmployeeAPI
  */
 app.use('/api/employees', EmployeeAPI);
 

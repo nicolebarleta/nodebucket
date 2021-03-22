@@ -1,3 +1,15 @@
+/*
+ ============================================
+; Title:  login.component.css
+; Author: Professor Krasso
+; Date: 21 March 2021
+; Modified By: Marie Nicole Barleta
+; Description: The login component styling
+;===========================================
+**/
+
+
+/* Start of the login container style */
 .login-container {
     width: 30%;
     margin: 0 auto;
@@ -13,8 +25,13 @@
 .login-subtitle {
     text-align: center;
 }
+/* End of the login container style */
 
+
+/* Start of the error message style */
 .error-message {
     color: red;
     text-align: center;
 }
+
+/* End of the error message style */

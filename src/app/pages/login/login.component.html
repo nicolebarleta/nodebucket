@@ -1,11 +1,11 @@
 <!---
  ============================================
-; Title:  sign-in.component.html
+; Title:  login.component.html
 ; Author: Professor Krasso
-; Date: 14 February 2021
+; Date: 21 March 2021
 ; Modified By: Marie Nicole Barleta
-; Description: The sign-in form in a fxLayout column,
-; and Angular material is used to style this whole sign-in form.
+; Description: The login form in a fxLayout column,
+; and Angular material is used to style this whole sign-in form
 ;===========================================
 -->
 
@@ -18,21 +18,22 @@
     
     <mat-card-content>
         <mat-card class="mat-elevation-z0" fxLayout="column" fxLayoutGap="10px">
-
+             <!-- The login form  resets once the submit button is clicked -->
             <form [formGroup]="loginForm" (ngSubmit)="login(); loginForm.reset()">
 
             <mat-card-content>
                     <mat-form-field fxflex>
+                    <!-- The input will be retrieved as a empId for comparison in the database  -->
                     <input matInput
                                 [formControl]="loginForm.controls['empId']"
                                 placeholder="Employee ID" />
                                 
                
-                
+                <!-- Error message will show if the user attempt to move on without any input  -->
                 <mat-error *ngIf="loginForm.controls['empId'].hasError('required') && loginForm.controls['empId'].touched">
                     Employee ID is a required field.
                 </mat-error>
-
+                <!-- Error message will shows if the user input non numerical values  -->
                 <mat-error *ngIf="loginForm.controls['empId'].hasError('pattern') && loginForm.controls['empId'].touched">
                     Employee ID must be a numerical value.
                 </mat-error>
@@ -41,6 +42,7 @@
             </mat-card-content>
 
                 <mat-card-actions align="end">
+                 <!-- disabled button by default, it validates the user input in the loginForm  -->
                     <button type="submit"
                             fxFlex
                             mat-raised-button
