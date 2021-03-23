@@ -9,10 +9,17 @@
 
 //declaration of mongoose requirement
 const mongoose = require('mongoose');
+
+const Item = require("./item");
+
 //declaration of schema
 let employeeSchema = mongoose.Schema({
     //the empId is the object inserted in MongoDB
-    empId: { type: String, unique: true }
+    empId: { type: String, unique: true },
+
+    todo: [Item],
+    done: [Item]
+
     //the collection name in MongoDB where the objects are inserted
 }, {collection: "employees"});
 //export statement for employeeSchema
