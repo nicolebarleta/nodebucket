@@ -65,7 +65,7 @@ router.get('/:empId', async(req, res) => {
 /**
  * API: createTask
  * Post request to update MongoDb collections,
- * this one updates the arrays of tasks.
+ * this updates the arrays of tasks.
  */
 router.post('/:empId/tasks', async(req, res) => {
 
@@ -91,34 +91,44 @@ router.post('/:empId/tasks', async(req, res) => {
 
             } else {
                 console.log(employee);
+                
+                if(employee)
+                {
+                    const item = {
+                        text: req.body.text
+                    };
+    
+                    employee.todo.push(item);
+    
+                    employee.save(function(err, updatedEmployee){
+    
+                        if (err) 
+                        {
+                            
+                            console.log(err);
+                            
+                            const createTaskOnSaveMongoDbError = new BaseResponse('500', `MongoDB onSave() exception: ${err.message}`, null)
+    
+                            res.status(500).send(createTaskOnSaveMongoDbError.toObject());
+                        } else {
+                            console.log(updatedEmployee);
+    
+                            const createTaskOnSaveSuccessResponse = new BaseResponse('200', 'Successful query', updatedEmployee);
+    
+                            res.status(200).send(createTaskOnSaveSuccessResponse.toObject());
+                        }
+                    })
+                } else {
+                    console.log(`invalid employeeId`);
 
-                const item = {
-                    text: req.body.text
-                };
+                    const invalidEmployeeIdResponse = new BaseResponse (`200`, `Invalid employeeId`, null)
 
-                employee.todo.push(item);
-
-                employee.save(function(err, updatedEmployee){
-
-                    if (err) 
-                    {
-                        
-                        console.log(err);
-                        
-                        const createTaskOnSaveMongoDbError = new BaseResponse('500', `MongoDB onSave() exception: ${err.message}`, null)
-
-                        res.status(500).send(createTaskOnSaveMongoDbError.toObject());
-                    } else {
-                        console.log(updatedEmployee);
-
-                        const createTaskOnSaveSuccessResponse = new BaseResponse('200', 'Successful query', updatedEmployee);
-
-                        res.status(200).send(createTaskOnSaveSuccessResponse.toObject());
-                    }
-                })
+                    res.status(200).send(invalidEmployeeIdResponse.toObject());
+                }
+         
             }
         })
-    //Catching the error if the server is not working
+    //Capturing error if the server is not working
     } catch (e) {
         console.log(e);
 
@@ -128,6 +138,117 @@ router.post('/:empId/tasks', async(req, res) => {
     } 
 })
 
+/**
+ * API: findAllTasks
+ */
+router.get(`/:empId/tasks`, async(req, res) => {
 
+    try
+    {
+        Employee.findOne({'empId': req.params.empId}, 'empId todo done', function(err, employee) {
+
+            if (err)
+            {
+                console.log(err);
+
+                const mongoDBFindAllTasksException = new BaseResponse('500', `Internal server error ${err.message}`, null);
+
+                res.status(500).send(mongoDBFindAllTasksException.toObject());
+            }
+            else
+            {
+                console.log(employee);
+
+                const employeeTaskResponse = new BaseResponse('200', `Query Successful`, employee);
+                res.status(200).send(employeeTaskResponse.toObject());
+            }
+        })
+    }
+    catch (e)
+    {
+        console.log(e);
+
+        const errorCatchResponse = new BaseResponse(`500`, `Internal server error ${e.message}`, null);
+
+        res.status(500).send(errorCatchResponse.toObject());
+    }
+})
+
+ /**
+ * API: updateTasks
+ */
+router.put('/:empId/tasks', async(req, res) => {
+
+    try
+    {
+        Employee.findOne({'empId': req.params.empId}, function (err, employee)
+        {
+            if (err)
+            {
+                console.log(err);
+
+                const updateTaskMongodbException = new BaseResponse('500', `Internal server error ${err.message}`, null)
+
+                res.status(500).send(updateTaskMongodbException.toObject());
+            }
+            else
+            {
+                console.log(employee);
+
+                if (employee)
+                {
+                    employee.set({
+                        todo: req.body.todo,
+                        done: req.body.done
+                    });
+
+                    employee.save(function(err, updatedEmployee){
+                        if (err)
+                        {
+                            console.log(err);
+
+                            const updateTaskMongoDbError = new BaseResponse('500', `Internal server error ${err.message}`, null);
+
+                            res.status(500).send(updateTaskMongoDbError.toObject());
+ 
+                        }
+                        else
+                        {
+                            console.log(updatedEmployee);
+
+                            const updatedTaskSuccessResponse = new BaseResponse('200', `Query successful`, updatedEmployee)
+
+                            res.status(200).send(updatedTaskSuccessResponse.toObject());
+                        }
+                    })
+
+                }
+                else
+                {
+                    console.log(`Invalid employeeId! The passed-in value was ${req.params.empId}`);
+
+                    const invalidEmployeeIdResponse = new BaseResponse('200', 'Invalid employeeId', null)
+
+                    res.status(200).send(invalidEmployeeIdResponse.toObject());
+                }
+            }
+        })
+    }
+    catch (e)
+    {
+        console.log(e);
+
+        const updateTaskCatchResponse = new BaseResponse('500', `Internal server error ${e.message}`, null);
+
+        res.status(500).send(updateTaskCatchResponse.toObject());
+    }
+})
+ /**
+ * API: deleteTask
+ */
+
+
+
+ 
 //Export routing statement
 module.exports = router;
