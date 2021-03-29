@@ -64,8 +64,8 @@ router.get('/:empId', async(req, res) => {
 })
 /**
  * API: createTask
- * Post request to update MongoDb collections,
- * this updates the arrays of tasks.
+ * Post request to create a record on MongoDb collections,
+ * this updates the arrays of employee id's todo task.
  */
 router.post('/:empId/tasks', async(req, res) => {
 
@@ -77,7 +77,7 @@ router.post('/:empId/tasks', async(req, res) => {
              * If the error doesn't occur it will get the text as an object
              * and the todo item will be pushed into the array in the schema and will be saved, 
              * after that it go through another process to make sure if it successfully saved,
-             * if everything worked in updated employee a successful query will be show.
+             * if everything worked in updated employee a successful query will be shown.
              */
 
             if (err)
@@ -140,8 +140,18 @@ router.post('/:empId/tasks', async(req, res) => {
 
 /**
  * API: findAllTasks
+ * This API has a get request 
+ * to retrieved all the tasks records of the employees,
+ * all todo tasks and done tasks. 
  */
 router.get(`/:empId/tasks`, async(req, res) => {
+
+    /**
+     * The Employee.findOne, 
+     * a MongoDb function will get all the 
+     * empId's todo and done tasks, 
+     * if there are no errors.
+     */
 
     try
     {
@@ -176,6 +186,8 @@ router.get(`/:empId/tasks`, async(req, res) => {
 
  /**
  * API: updateTasks
+ * A put request is used to be able to update 
+ * the done and todo tasks of an employee.
  */
 router.put('/:empId/tasks', async(req, res) => {
 
@@ -193,6 +205,11 @@ router.put('/:empId/tasks', async(req, res) => {
             }
             else
             {
+                /**
+                 * If there was no error the specific employee's
+                 * todo and done tasks will be set and saved.
+                 * The updated employee will be shown afterwards.
+                 */
                 console.log(employee);
 
                 if (employee)
@@ -223,6 +240,7 @@ router.put('/:empId/tasks', async(req, res) => {
                     })
 
                 }
+                //This is the error handling for invalid employee id input
                 else
                 {
                     console.log(`Invalid employeeId! The passed-in value was ${req.params.empId}`);
@@ -245,8 +263,114 @@ router.put('/:empId/tasks', async(req, res) => {
 })
  /**
  * API: deleteTask
+ * Delete request to delete a specific task 
+ * in a specific employee id.
  */
+router.delete('/:empId/tasks/:taskId', async(req, res) => {
 
+    try
+    {
+        Employee.findOne({'empId': req.params.empId}, function(err, employee)
+        {
+            if(err)
+            {
+                console.log(err);
+
+                const deleteTaskMongoDbError = new BaseResponse('500', `Internal server error ${err.message}`, null);
+
+                res.status(500).send(deleteTaskCatchError.toObject());
+            }
+            else
+            {
+                console.log(employee);
+                /**
+                 * the todoItem variable will find the declared employee ID's todo task id
+                 * and will turn it into a string and it is compared to the declared todo task id,
+                 * and verify they are equal.
+                 */
+                const todoItem = employee.todo.find(item => item._id.toString() === req.params.taskId);
+                /**
+                 * the doneItem variable will find the declared employee ID's done task id
+                 * and will turn it into a string and it is compared to the declared done task id,
+                 * and verify they are equal.
+                 */
+                const doneItem = employee.done.find(item => item._id.toString() === req.params.taskId);
+
+
+                /**
+                 * If there is no error the todoItem id that was received 
+                 * will be removed from the collections and will be saved,
+                 * the updated employee todo item records will be shown afterwards. 
+                 */
+                if (todoItem)
+                {
+                    console.log(todoItem);
+
+                    employee.todo.id(todoItem._id).remove();
+
+                    employee.save(function(err, updatedTodoItemEmployee){
+                        if(err)
+                        {
+                            console.log(err);
+                            const deleteTodoItemMongodbError = new BaseResponse('500', `Internal server error ${err.message}`, null);
+                            res.status(500).send(deleteTodoItemMongodbError.toObject());
+                        }
+                        else
+                        {
+                            console.log(updatedTodoItemEmployee);
+
+                            const deleteTodoItemSuccess = new BaseResponse('200', 'Query Successful', updatedTodoItemEmployee)
+                            res.status(200).send(deleteTodoItemSuccess.toObject());
+                        }
+                    })
+                }
+                /**
+                 * If there is no error the doneItem id that was received 
+                 * will be removed from the collections and will be saved,
+                 * the updated employee done item records will be shown afterwards. 
+                 */
+                else if (doneItem)
+                {
+                    console.log(doneItem);
+
+                    employee.done.id(doneItem._id).remove();
+
+                    employee.save(function(err, updatedDoneItemEmployee){
+                        if(err)
+                        {
+                            console.log(err);
+                            const deleteDoneMongoDbError = new BaseResponse('500', `Internal server error ${err.message}`, null);
+                            res.status(500).send(deleteDoneMongoDbError.toObject());
+                        }
+                        else
+                        {
+                            console.log(updatedDoneItemEmployee);
+
+                            const deleteDoneItemSuccess = new BaseResponse('200', 'Query Successful', updatedDoneItemEmployee)
+                            res.status(200).send(deleteDoneItemSuccess.toObject());
+                        }
+                    })
+                }
+                else 
+                //error handling for an invalid task id input
+                {
+                    console.log(`Invalid taskId: passed-in value ${req.params.taskId}`)
+                    const invalidTaskIdResponse = new BaseResponse('200', 'Invalid taskId', null);
+
+                    res.status(200).send(invalidTaskIdResponse.toObject());
+                }
+            }
+        })
+    }
+    catch (e)
+    {
+        console.log(e);
+
+        const deleteTaskCatchError = new BaseResponse('500', `Internal server error ${e.message}`, null);
+
+        res.status(500).send(deleteTaskCatchError.toObject());
+    }
+})
 
 
  
