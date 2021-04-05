@@ -26,6 +26,9 @@ import { BaseLayoutComponent } from './shared/base-layout/base-layout.component'
 import { AuthLayoutComponent } from './shared/auth-layout/auth-layout.component';
 import { LoginComponent } from './pages/login/login.component';
 import { CreateTaskDialogComponent } from './shared/create-task-dialog/create-task-dialog.component'
+import { AboutComponent } from './pages/about/about.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
+
 
 //import statements for angular material
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -39,6 +42,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 
+
+
 //components declarations
 @NgModule({
   declarations: [
@@ -47,7 +52,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     BaseLayoutComponent,
     AuthLayoutComponent,
     LoginComponent,
-    CreateTaskDialogComponent
+    CreateTaskDialogComponent,
+    AboutComponent,
+    NotFoundComponent
   ],
   //imports declaration
   imports: [

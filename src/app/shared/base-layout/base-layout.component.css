@@ -10,47 +10,65 @@
 
 /* Start of the navigation style */
 .logo {
-    margin-left: 75px;
-    font-size: 24px;
-    font-weight: lighter;;
-  }
-  
-  .navbar-container {
-    padding: 5px;
-  }
-  
-  .navbar-link {
-    font-size: 24px;
-    font-weight: lighter;
-  }
+  margin-left: 50px;
+  font-size: 24px;
+  font-weight: lighter;;
+}
+
+.navbar-container{
+  margin-left: 150px;
+}
+
+.navbar {
+  padding: 5px;
+  font-size: 24px;
+  font-weight: lighter;
+}
+
+button {
+  margin: 15px;
+}
+
 /* End of the navigation style */
 
 
 /* Start of the main content style */
-  .main-content {
-    padding-left: 30px;
-  }
+#page-container{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+#main-content {
+  padding-bottom: 5rem;
+}
+
+
+
 /* End of the main content style */  
 
+
 /* Start of the footer style */
-  .footer {
-    bottom: 0;
-    position: absolute;
-    width: 100%;
-  }
-  
-  .footer-content {
-    font-size: 16px;
-    font-weight: lighter;
-    padding-left: 100px;
-    letter-spacing: 3px;
-  }
-  
-  .bu-link {
-    text-decoration: none;
-  }
-  
-  .bu-link:hover {
-    text-decoration: underline;
-  }
-/* End of the navigation style */
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.footer-content {
+  font-size: 16px;
+  font-weight: lighter;
+  padding-left: 100px;
+  letter-spacing: 3px;
+}
+
+.bu-link {
+  text-decoration: none;
+}
+
+.bu-link:hover {
+  text-decoration: underline;
+}
+/* End of the footer style */

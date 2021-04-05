@@ -1,0 +1,25 @@
+/*
+ ============================================
+; Title:  not-found.component.css
+; Author: Professor Krasso
+; Date: 21 March 2021
+; Modified By: Marie Nicole Barleta
+; Description: Not-found component styling
+;===========================================
+**/
+
+
+/* Styling for the not-found section */
+.main{
+    text-align: center;
+    width: 50;
+}
+
+img {
+    width: 50%;
+}
+
+button{
+    width: 50%;
+}
+/*End of not found section*/

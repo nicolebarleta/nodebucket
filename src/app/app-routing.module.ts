@@ -16,6 +16,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './shared/auth-layout/auth-layout.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './shared/auth.guard';
+import { AboutComponent } from './pages/about/about.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 //declaration of routes
 const routes: Routes = [
   {
@@ -32,6 +34,10 @@ const routes: Routes = [
          * canActivate will allow the parent and child once its authenticated
          */
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'about',
+        component: AboutComponent
       }
     ]
   },
@@ -41,16 +47,24 @@ const routes: Routes = [
     component: AuthLayoutComponent,
     children: [
       {
+        path: 'not-found',
+        component: NotFoundComponent
+      },
+      {
         path: 'login',
         component: LoginComponent
       }
     ]
-  }
+  },
+  {
+  path: '**',
+  redirectTo: 'session/not-found'
+  },
 ];
 //NgModule imports and exports
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: true, enableTracing: false, scrollPositionRestoration: 'enabled', relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
-//export statement of approuting module
+//export statement of app routing module
 export class AppRoutingModule { }

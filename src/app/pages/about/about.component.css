@@ -1,0 +1,24 @@
+/*
+ ============================================
+; Title:  home.component.css
+; Author: Professor Krasso
+; Date: 21 March 2021
+; Modified By: Marie Nicole Barleta
+; Description: The home component styling
+;===========================================
+**/
+
+
+/* Styling for about */
+.about {
+    padding-right: 7rem;
+    margin-top: 7rem;
+  }
+
+img {
+    width: 100%;
+}
+
+/* End of about style */
+
+

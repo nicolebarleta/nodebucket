@@ -14,39 +14,37 @@
 
 <div fxLayout="column">
 
-    <!-- navigation -->
-    <nav fxFlex>
-      <mat-toolbar>
-        <!-- navbar container -->
-        <div class="navbar-container">
-          <!-- logo -->
-          <button class="logo" routerLink="/" mat-button>nodebucket</button>
-  
-          <button class="navbar-link" routerLink="/" mat-button>Home</button>
-          <button class="navbar-link" mat-button>About</button>
-          <button class="navbar-link" mat-button (click)="signOut()">Sign Out</button>
-        </div>
-  
-      </mat-toolbar>
-    </nav>
-  
-    <!-- main content -->
-    <div fxFlex>
-      <main class="main-content" fxFlex="100%;">
-        <router-outlet></router-outlet>
-      </main>
+  <!-- navigation -->
+  <mat-toolbar class="toolbar">
+    <mat-toolbar-row>
+      <div class="logo">
+       nodebucket
+      </div>
+
+      <div class="navbar-container">
+            <button mat-button routerLink="/" class="navbar">Home</button>
+            <button mat-button routerLink="/about" class="navbar">About Us</button>
+            <button mat-button (click)="signOut()" class="navbar">Employee Sign Out</button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <!-- main content -->
+  <div id="page-container" fxFlex>
+    <div id="main-content" fxFlex="100%;">
+      <router-outlet></router-outlet>
     </div>
-  
-    <!-- footer -->
-    <div fxFlex>
-      <footer class="footer">
-        <mat-toolbar class="footer-content">
-          <p>
-            &copy; {{year | date: 'yyyy'}} - nodebucket - <a href="https://www.bellevue.edu/" class="bu-link" target="_blank">Bellevue University</a>
-          </p>
-        </mat-toolbar>
-      </footer>
-    </div>
-  
   </div>
-  
+
+  <!-- footer -->
+  <div class="footer" fxFlex>
+    <footer>
+      <mat-toolbar class="footer-content">
+        <p>
+          &copy; {{year | date: 'yyyy'}} - nodebucket - <a href="https://www.bellevue.edu/" class="bu-link" target="_blank">Bellevue University</a>
+        </p>
+      </mat-toolbar>
+    </footer>
+  </div>
+
+</div>
