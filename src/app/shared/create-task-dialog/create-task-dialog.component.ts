@@ -25,7 +25,7 @@ export class CreateTaskDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<CreateTaskDialogComponent>, private fb: FormBuilder) { }
 /**
- * 
+ * The value of input text will go as an array
  */
   ngOnInit(): void {
     this.taskForm = this.fb.group({
@@ -33,13 +33,15 @@ export class CreateTaskDialogComponent implements OnInit {
     })
   }
 /**
- * 
+ * This function will close the dialog box once the 
+ * create task is done
  */
   createTask() {
     this.dialogRef.close(this.taskForm.value);
   }
 /**
- *
+ * This function will close the dialog box 
+ * after clicking cancel button
  */
   cancel() {
     this.dialogRef.close();

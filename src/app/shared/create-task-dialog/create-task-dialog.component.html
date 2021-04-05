@@ -1,11 +1,24 @@
-<h2 mat-dialog-title> Add new task </h2>
+<!---
+ ============================================
+; Title:  create-task-dialog.component.html
+; Author: Professor Krasso
+; Date: 05 April 2021
+; Modified By: Marie Nicole Barleta
+; Description: This is the create task dialog component
+;===========================================
+-->
 
+
+
+<h2 mat-dialog-title> Add new task </h2>
+<!-- This is the input field form that will pop up once the user click on the 
+create task button, pressing enter key will add the task as well. -->
 <mat-dialog-content [formGroup]="taskForm">
     <mat-form-field>
         <input type="text" matInput placeholder="Enter a task name" formControlName="text" (keydown.enter)="createTask()" />
     </mat-form-field>
 </mat-dialog-content>
-
+<!-- Cancel button to cancel the dialog box -->
 <mat-dialog-actions align="end">
     <button mat-button (click)="cancel()"> Cancel </button>
     <button mat-button (click)="createTask()" [disabled]="!taskForm.valid"> Create Task </button>

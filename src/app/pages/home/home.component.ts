@@ -34,7 +34,10 @@ export class HomeComponent implements OnInit {
   empId: string;
 
   constructor(private taskService: TaskService, private cookieService: CookieService, private dialog: MatDialog) { 
-
+/**
+ * This section is validating all the data that was retrieved from the 
+ * database if it's not working it won't show any log in the console
+ */
     this.empId = this.cookieService.get('session_user');
 
     this.taskService.findAllTasks(this.empId).subscribe(res => {
