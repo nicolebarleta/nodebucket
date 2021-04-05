@@ -10,7 +10,7 @@
  */
 
 
-
+//import statements
 import { Component, OnInit } from '@angular/core';
 import { Item } from 'src/app/shared/item.interface';
 import { Employee } from 'src/app/shared/employee.interface';
@@ -26,7 +26,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  //Defined variables
   todo: Item[];
   done: Item[];
   employee: Employee;
@@ -50,7 +50,11 @@ export class HomeComponent implements OnInit {
       console.log(err);
     }, () => {
 
-      //on complete
+      /**
+       * It shows the console when it is successfully connected 
+       * to the server and the database, here it shows 
+       * when it is connected to todo and done sections.
+       */
       this.todo = this.employee.todo;
       this.done = this.employee.done;
       
@@ -64,7 +68,10 @@ export class HomeComponent implements OnInit {
   }
 
   /**
-   * 
+   * This function is connects to the 
+   * openCreateDialog component and calls the 
+   * create task once the user click the submit button
+   * a new task item will be saved.
    */
   openCreateTaskDialog() {
     const dialogRef = this.dialog.open(CreateTaskDialogComponent, {
@@ -89,7 +96,11 @@ export class HomeComponent implements OnInit {
   }
   
   /**
-  * 
+  * This is the drop event which is connected to the array 
+  * of the CdkDragDrop event variable holder, there are statements
+  * which checks if the item is equal to previous container and 
+  * the event container if it is equal the status will be the same but 
+  * if it is not equal it will update the new status of the task.
   */
   drop(event: CdkDragDrop<any[]>) {
 
@@ -110,6 +121,8 @@ export class HomeComponent implements OnInit {
   /**
    * 
    * @param taskId 
+   * This function will call the delete API and will delete the selected
+   * taskId from the specific employee Id
    */
   deleteTask(taskId: string): void {
     if (taskId)
@@ -131,6 +144,8 @@ export class HomeComponent implements OnInit {
    * @param empId
    * @param todo
    * @param done
+   * This function will update the task's status 
+   * from the specific employee id.
    */
   private updateTaskList(empId: string, todo: Item[], done: Item[]): void {
     this.taskService.updateTask(empId, todo, done).subscribe(res => {

@@ -24,6 +24,9 @@
   }
 /* End of the main welcome style */
 
+
+
+
 /* 
   Angular cdk drag and drop specific styling 
 */
@@ -72,3 +75,5 @@
   justify-content: space-between;
   align-items: center;
 }
+
+/* End of drag and drop specific styling */
