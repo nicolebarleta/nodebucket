@@ -16,179 +16,196 @@
   The to-do and done columns are powered by Angular Drag and Drop Between Lists
 -->
 
+
+
+<!-- This is the main container of the home component -->
 <div fxLayout="column" class="main-welcome">
 
-<!-- title -->
-<div fxFlex>
-  <h1 class="title">
-    Welcome to WEB 450's - nodebucket Project <br />
-    <span class="subtitle">
-      Pay close attention to the requirements, double and triple check the files for code attribution, and do not wait unitl the last minute to begin working on each item.
-    </span>
-  </h1>
-</div>
-<!-- end fxFlex-->
+          <!-- title -->
+          <div fxFlex>
+            <h1 class="title">
+              Welcome to WEB 450's - nodebucket Project <br />
+              <span class="subtitle">
+                Pay close attention to the requirements, double and triple check the files for code attribution, and do not wait unitl the last minute to begin working on each item.
+              </span>
+            </h1>
+          </div>
+          <!-- end title fxFlex-->
 
-<!-- Employee id greeting -->
-  <h2 class="title">Employee: {{empId}}</h2>
-<!-- end empId greeting -->
+            <!-- Employee id greeting -->
+              <h2 class="title">Employee: {{empId}}</h2>
+            <!-- end empId greeting -->
 
-  <!-- create task 
-      - This button is connected to the openCreateTaskDialog function,
-      that leads the create dialog box that will allow users to add their task.
-  -->
-  <div fxFlex>
-      <div fxLayout="column" class="task-container">
-        <button mat-raised-button color="primary" (click)="openCreateTaskDialog()">Create Task</button>
-      </div>
-  </div>
-  <!-- end fxFlex -->
+            <!-- create task 
+                - This button is connected to the openCreateTaskDialog function,
+                that leads the create dialog box that will allow users to add their task.
+            -->
+            <div fxFlex>
+                <div fxLayout="column" class="task-container">
+                  <button mat-raised-button color="primary" (click)="openCreateTaskDialog()">Create Task</button>
+                </div>
+            </div>
+            <!-- end fxFlex -->
 
-<br />
+    <br />
 
-  <!-- Task columns -->
-  <div fxFlex>
+          <!-- Task columns -->
+          <div fxFlex>
 
-    <div fxLayout="row" fxLayoutGap="15px" class="task-container">
+            <div fxLayout="row" fxLayoutGap="15px" class="task-container">
 
 
-      <!-- Todo tasks container -->
-      <div fxFlex>
-        <mat-card>
-          <mat-card-title>To do</mat-card-title>
+            <!-- Todo tasks container -->
+            <div fxFlex>
+              <mat-card>
+                <mat-card-title>To do</mat-card-title>
+                 <!-- Start of todo mat-card content -->
+                <mat-card-content>
+                  <!-- These are the drag and drop variables to be able to use the
+                  Angular drag and drop functionality, this list is specified for todo tasks
+                 -->
+                    <div
+                      fxLayout="column"
+                      fxLayoutGap="10px"
+                      class="task-list"
+                      cdkDropList
+                      #todoList="cdkDropList"
+                      [cdkDropListData]="todo"
+                      [cdkDropListConnectedTo]="[doneList]"
+                      (cdkDropListDropped)="drop($event)">
+                      <!-- The item arrays of to do will loop over once the item is dragged -->
+                      <div *ngFor="let item of todo" cdkDrag>
 
-          <mat-card-content>
-            <div
-              fxLayout="column"
-              fxLayoutGap="10px"
-              class="task-list"
-              cdkDropList
-              #todoList="cdkDropList"
-              [cdkDropListData]="todo"
-              [cdkDropListConnectedTo]="[doneList]"
-              (cdkDropListDropped)="drop($event)">
-              <!-- The item arrays of to do will loop over once the item is dragged -->
-              <div *ngFor="let item of todo" cdkDrag>
-
-                <mat-card class="mat-elevation-z0 task-card">
+                  <!-- The cards for each todo tasks -->
+                  <mat-card class="mat-elevation-z0 task-card">
 
                   <mat-card-content>
 
-                    <div fxLayout="row">
-                      <!-- task name -->
-                      <div fxFlex>
-                        {{ item.text }}
-                      </div>
-                      <!-- end of task name -->
+                            <div fxLayout="row">
+                                    <!-- todo task name -->
+                                    <div fxFlex>
+                                      {{ item.text }}
+                                    </div>
+                                    <!-- end of todo task name -->
 
-                      <!-- menu -->
-                      <div fxFlex fxLayoutAlign="end">
-                        <button [matMenuTriggerFor]="todoOptions" class="" mat-icon-button>
-                          <mat-icon>more_vert</mat-icon>
-                        </button>
-                         <!-- This is the remove button for to-do tasks from the menu item -->
-                        <mat-menu #todoOptions="matMenu" x-position="before">
-                          <button (click)="deleteTask(item._id)" mat-menu-item>
-                            Remove
-                          </button>
-                        </mat-menu>
-                    </div>
-                    <!-- end of menu fxFlex -->
-                  </div>
-                  
+                                    <!-- menu -->
+                                    <div fxFlex fxLayoutAlign="end">
+                                      <button [matMenuTriggerFor]="todoOptions" class="" mat-icon-button>
+                                        <mat-icon>more_vert</mat-icon>
+                                      </button>
+                                      <!-- This is the remove button for to-do tasks from the menu item -->
+                                      <mat-menu #todoOptions="matMenu" x-position="before">
+                                        <button (click)="deleteTask(item._id)" mat-menu-item>
+                                          Remove
+                                        </button>
+                                      </mat-menu>
+                                    </div>
+                                    <!-- end of menu fxFlex -->
+                            </div>
+                            <!-- end of Layout row -->
+                            
                   </mat-card-content>
+                  <!-- end mat card content for each todo tasks -->
+
+                  </mat-card>
+                  <!-- end mat card -->
+
+                       </div>
+                       <!-- End of the for loop of the cdk drag of to do-->
+                    </div>
+                    <!-- End of div of to do -->
+           
+                </mat-card-content>
+                <!-- End of todo mat-card content -->
+              </mat-card>
+              <!-- End of mat-card of todo -->
+            </div>
+            <!-- end of todo fxFlex -->
+
+          <!-- Done tasks container -->
+          <div fxFlex>
+            <!-- Done mat card -->
+            <mat-card>
+              <mat-card-title>Done</mat-card-title>
+              <!-- These are the drag and drop variables to be able to use the
+                Angular drag and drop functionality,this list is specified for done tasks -->
+              <mat-card-content>
+                
+                <div 
+                fxLayout="column"
+                fxLayoutGap="10px"
+                class="task-list"
+                cdkDropList
+                #doneList="cdkDropList"
+                [cdkDropListData]="done"
+                [cdkDropListConnectedTo]="todoList"
+                (cdkDropListDropped)="drop($event)">
+                <!-- The item arrays of done will loop over once the item is dragged -->
+                <div *ngFor="let item of done" cdkDrag>
+
+
+                  <!-- The cards for each done tasks -->
+                  <mat-card class="mat-elevation-z0 task-card">
+
+
+                    <mat-card-content>
+
+
+                      <div fxLayout="row">
+
+
+                      <!-- done item -->
+                        <div fxFlex>
+                          {{ item.text}}
+                        </div>
+                        <!-- end done item -->
+                        
+
+                        <!-- menu button -->
+                        <div fxFlex fxLayoutAlign="end">
+                          <button [matMenuTriggerFor]="doneOptions" mat-icon-button>
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <!-- end mat menu button -->
+
+                          <!-- This is the remove button for done tasks from the menu item -->
+                          <mat-menu #doneOptions="matMenu" x-position="before">
+                            <button (click)="deleteTask(item._id)" mat-menu-item>
+                              Remove
+                            </button>
+                          </mat-menu>
+                          <!-- end mat menu -->
+
+
+                        </div>
+                        <!-- end done options menu -->
+
+                      </div>
+                      <!-- end fxLayout row -->
+
+                    </mat-card-content>
                   <!-- end mat card content -->
 
-                </mat-card>
-                <!-- end mat card -->
+                  </mat-card>
+                  <!-- end mat card of each done tasks -->
+                </div>
+                <!-- end of ngFor for done items -->
 
-              </div>
-
-            </div>
-            
-           
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <!-- end of todo fxFlex -->
-
-      <!-- Done tasks container -->
-      <div fxFlex>
-        <mat-card>
-          <mat-card-title>Done</mat-card-title>
-
-          <mat-card-content>
-            <div 
-            fxLayout="column"
-            fxLayoutGap="10px"
-            class="task-list"
-            cdkDropList
-            #doneList="cdkDropList"
-            [cdkDropListData]="done"
-            [cdkDropListConnectedTo]="todoList"
-            (cdkDropListDropped)="drop($event)">
-            <!-- The item arrays of done will loop over once the item is dragged -->
-            <div *ngFor="let item of done" cdkDrag>
-
-
-
-              <mat-card class="mat-elevation-z0 task-card">
-
-
-                <mat-card-content>
-
-
-                  <div fxLayout="row">
-
-
-                   <!-- done item -->
-                    <div fxFlex>
-                      {{ item.text}}
-                    </div>
-                    <!-- end done item -->
-                    
-
-                    <!-- menu button -->
-                    <div fxFlex fxLayoutAlign="end">
-                      <button [matMenuTriggerFor]="doneOptions" mat-icon-button>
-                        <mat-icon>more_vert</mat-icon>
-                      </button>
-                      <!-- end mat menu button -->
-
-                      <!-- This is the remove button for done tasks from the menu item -->
-                      <mat-menu #doneOptions="matMenu" x-position="before">
-                        <button (click)="deleteTask(item._id)" mat-menu-item>
-                          Remove
-                        </button>
-                      </mat-menu>
-                      <!-- end mat menu -->
-
-
-                    </div>
-                    <!-- end done options menu -->
-
-                  </div>
-                  <!-- end fxLayout row -->
-
-                </mat-card-content>
-              <!-- end mat card content -->
-
-              </mat-card>
-              <!-- end mat card -->
-            </div>
-            <!-- end of ngFor for done items -->
-
+                </div>
+                <!-- end Div of done tasks-->
+              </mat-card-content>
+              <!-- end of done mat card content -->
+            </mat-card>
+            <!-- end of done mat card-->
           </div>
+          <!-- end of done fxFlex container -->
 
-          </mat-card-content>
-        </mat-card>
+
+
       </div>
-      <!-- end of done fxFlex -->
-    </div>
-    <!-- end of row container -->
-  </div>
-  <!-- end of fxFlex -->
-
+      <!-- end of row container -->
+   </div>
+   <!-- end of fxFlex -->
 </div>
 <!-- end of the main container -->
 
