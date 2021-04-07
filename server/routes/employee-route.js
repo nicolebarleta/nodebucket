@@ -11,8 +11,7 @@
 const express = require('express');
 const Employee = require("../db-models/employee");
 const BaseResponse = require('../service/base-response');
-const { $ } = require('protractor');
-const { isNull } = require('util');
+
 //Express router statement
 const router = express.Router();
 
